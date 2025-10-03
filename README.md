@@ -10,6 +10,7 @@ A modern, high-performance real estate website built with Next.js 14, TypeScript
 - **Responsive**: Mobile-first design with smooth animations
 - **Analytics**: GA4 integration with custom events
 - **CMS Ready**: Sanity CMS integration scaffolded
+- **Google Sheets**: Manage property listings via Google Sheets
 - **Components**: Reusable cards, filters, gallery, sticky enquiry
 
 ## 📁 Project Structure
@@ -39,7 +40,11 @@ cloudsevenrealty/
 ├── lib/
 │   ├── analytics.ts        # GA4 helper functions
 │   ├── sanity.ts           # Sanity CMS client
-│   └── queries.ts          # GROQ queries for Sanity
+│   ├── queries.ts          # GROQ queries for Sanity
+│   └── googleSheets.ts     # Google Sheets integration
+├── docs/                   # Documentation
+│   ├── GOOGLE_SHEETS_SETUP.md     # Google Sheets setup guide
+│   └── GOOGLE_DRIVE_INTEGRATION.md # Google Drive conversion guide
 └── public/                 # Static assets
 
 ```
@@ -77,6 +82,10 @@ NEXT_PUBLIC_WHATSAPP_NUMBER=919876543210
 SANITY_PROJECT_ID=
 SANITY_DATASET=production
 SANITY_READ_TOKEN=
+GOOGLE_SHEETS_SPREADSHEET_ID=
+GOOGLE_SERVICE_ACCOUNT_EMAIL=
+GOOGLE_PRIVATE_KEY=
+GOOGLE_SHEETS_RANGE=Properties!A2:H
 MAPBOX_TOKEN=
 GA_MEASUREMENT_ID=
 ```
@@ -144,6 +153,20 @@ The project uses:
 Change fonts in `app/layout.tsx`.
 
 ## 🔌 Integrations
+
+### Google Sheets (Property Listings)
+
+Manage your property listings in a Google Sheet for easy updates without touching code!
+
+**Quick Start:**
+1. Create a Google Sheet with property data
+2. Set up a Google Cloud service account
+3. Share the sheet with the service account
+4. Add credentials to `.env`
+
+**Detailed Setup Guide:** See [docs/GOOGLE_SHEETS_SETUP.md](docs/GOOGLE_SHEETS_SETUP.md)
+
+**Converting from Google Drive:** See [docs/GOOGLE_DRIVE_INTEGRATION.md](docs/GOOGLE_DRIVE_INTEGRATION.md)
 
 ### Sanity CMS
 

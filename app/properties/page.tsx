@@ -3,48 +3,12 @@ import { Suspense } from "react";
 import Filters from "@/components/Filters";
 import PropertyCard from "@/components/PropertyCard";
 import TrustStrip from "@/components/TrustStrip";
+import { getProperties } from "@/lib/googleSheets";
 
 export const metadata: Metadata = {
   title: "Properties - Cloud Seven Realty",
   description: "Browse properties for buy, rent, and land with verified titles",
 };
-
-// Mock data - replace with Sanity CMS data
-const mockProperties = [
-  {
-    slug: "luxury-villa-downtown",
-    title: "Luxury Villa in Downtown",
-    subtitle: "Spacious 4BHK villa with garden and parking",
-    price: "2.5Cr",
-    size: "3500 sqft",
-    location: "Downtown",
-    status: "Buy" as const,
-    imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
-    features: ["4 BHK", "Garden", "Parking", "Modern amenities"]
-  },
-  {
-    slug: "cozy-apartment-suburbs",
-    title: "Cozy Apartment in Suburbs",
-    subtitle: "2BHK furnished apartment ready to move in",
-    price: "25K/month",
-    size: "1200 sqft",
-    location: "Suburbs",
-    status: "Rent" as const,
-    imageUrl: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800",
-    features: ["Furnished", "2 BHK", "Ready to move", "Near metro"]
-  },
-  {
-    slug: "prime-land-highway",
-    title: "Prime Land Near Highway",
-    subtitle: "Agricultural land with road access and water supply",
-    price: "35L",
-    size: "2 kanal",
-    location: "Highway",
-    status: "Land" as const,
-    imageUrl: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800",
-    features: ["Road access", "Water", "15 min to city", "Clear title"]
-  }
-];
 
 function FiltersFallback() {
   return (
@@ -61,7 +25,9 @@ function FiltersFallback() {
   );
 }
 
-export default function PropertiesPage() {
+export default async function PropertiesPage() {
+  const properties = await getProperties();
+  
   return (
     <>
       {/* Header */}
@@ -82,7 +48,7 @@ export default function PropertiesPage() {
       {/* Filters */}
       <Suspense fallback={<FiltersFallback />}>
         <Filters 
-          resultCount={mockProperties.length}
+          resultCount={properties.length}
           statusOptions={[
             { label: "All Status", value: "" },
             { label: "Buy", value: "buy" },
@@ -96,7 +62,7 @@ export default function PropertiesPage() {
       <section className="py-12 sm:py-16">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {mockProperties.map((property) => (
+            {properties.map((property) => (
               <PropertyCard key={property.slug} {...property} />
             ))}
           </div>
