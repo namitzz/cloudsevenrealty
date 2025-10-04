@@ -23,8 +23,8 @@ export function urlFor(source: any) {
 
 // Mock client for development
 export const client = {
-  fetch: async (query: string) => {
-    console.log("Sanity query:", query);
+  fetch: async (_query: string) => {
+    // Mock Sanity client - replace with real client when configured
     return [];
   }
 };

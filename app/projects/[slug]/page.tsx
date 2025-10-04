@@ -71,7 +71,9 @@ const mockProject = {
 export default async function ProjectDetailPage({ params }: Props) {
   // In production, fetch project data based on params.slug
   const { slug } = await params;
-  console.log("Project slug:", slug); // Acknowledge params usage
+  
+  // TODO: Fetch actual project data using slug
+  // const project = await fetchProject(slug);
   
   return (
     <>

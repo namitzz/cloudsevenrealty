@@ -58,7 +58,9 @@ const mockProperty = {
 export default async function PropertyDetailPage({ params }: Props) {
   // In production, fetch property data based on params.slug
   const { slug } = await params;
-  console.log("Property slug:", slug); // Acknowledge params usage
+  
+  // TODO: Fetch actual property data using slug
+  // const property = await fetchProperty(slug);
   
   return (
     <>
