@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +21,12 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
           <Link href="/" className="text-xl sm:text-2xl font-serif font-bold text-foreground">
-            Cloud Seven
+          
+
+<Link href="/" className="flex items-center gap-2" aria-label="Home">
+  <Image src="/logo.svg" alt="Cloud Seven Realty" width={140} height={32} priority />
+</Link>
+
           </Link>
 
           {/* Desktop Navigation */}
