@@ -10,21 +10,21 @@ const projects = [
     id: 1,
     name: "Islands",
     location: "Premium Waterfront",
-    image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800",
+    image: "/Logo.jpg", // Using existing logo as placeholder
     href: "/projects/islands",
   },
   {
     id: 2,
     name: "Ocean Star",
     location: "Coastal Paradise",
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800",
+    image: "/Logo.jpg", // Using existing logo as placeholder
     href: "/projects/ocean-star",
   },
   {
     id: 3,
     name: "Terra Heights",
     location: "Mountain View Estate",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
+    image: "/Logo.jpg", // Using existing logo as placeholder
     href: "/projects/terra-heights",
   },
 ];
@@ -65,7 +65,7 @@ export default function FeaturedProjects({ id = "projects" }: FeaturedProjectsPr
                 href={project.href}
                 className="group block bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-shadow duration-300 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
               >
-                <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="relative aspect-[4/3] overflow-hidden bg-neutral-200">
                   <Image
                     src={project.image}
                     alt={project.name}

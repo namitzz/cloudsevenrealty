@@ -27,11 +27,8 @@ const testimonials = [
 export default function Testimonials() {
   return (
     <section className="relative py-20 sm:py-32 bg-neutral-900 text-white overflow-hidden">
-      {/* Background Image - Replace with /public/Reviews.JPG when available */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-20"
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920')" }}
-      />
+      {/* Background pattern using gradients */}
+      <div className="absolute inset-0 bg-gradient-to-br from-neutral-800 via-neutral-900 to-black opacity-90" />
       
       {/* Dark gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/80 via-neutral-900/90 to-neutral-900/80" />

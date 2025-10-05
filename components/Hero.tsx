@@ -10,8 +10,8 @@ export default function Hero() {
       {/* Background overlay */}
       <div className="absolute inset-0 bg-black/50 z-10" />
       
-      {/* Background image placeholder - replace with actual image */}
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920')] bg-cover bg-center opacity-40" />
+      {/* Background gradient - using solid gradient instead of external image */}
+      <div className="absolute inset-0 bg-gradient-to-br from-neutral-800 via-neutral-900 to-black opacity-90" />
 
       {/* Content */}
       <div className="relative z-20 container-custom text-center px-4">
