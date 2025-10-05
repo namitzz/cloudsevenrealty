@@ -32,7 +32,9 @@ export async function fetchPropertiesFromSheet(): Promise<PropertyData[]> {
     if (!process.env.GOOGLE_SHEETS_SPREADSHEET_ID || 
         !process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL ||
         !process.env.GOOGLE_PRIVATE_KEY) {
-      console.log('Google Sheets not configured, using mock data');
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Google Sheets not configured, using mock data');
+      }
       return [];
     }
 
@@ -56,7 +58,9 @@ export async function fetchPropertiesFromSheet(): Promise<PropertyData[]> {
     const rows = response.data.values;
     
     if (!rows || rows.length === 0) {
-      console.log('No data found in Google Sheets');
+      if (process.env.NODE_ENV === 'development') {
+        console.log('No data found in Google Sheets');
+      }
       return [];
     }
 
