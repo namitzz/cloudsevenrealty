@@ -8,6 +8,10 @@
     --font-playfair: 'Playfair Display', Georgia, serif;
   }
   
+  html {
+    scroll-behavior: smooth;
+  }
+  
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-inter);
