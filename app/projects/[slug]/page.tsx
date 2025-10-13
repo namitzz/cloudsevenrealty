@@ -9,6 +9,15 @@ interface Props {
   params: Params;
 }
 
+export async function generateStaticParams() {
+  // In production, fetch all project slugs from CMS
+  return [
+    { slug: 'sunrise-valley' },
+    { slug: 'green-heights' },
+    { slug: 'royal-plaza' }
+  ];
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   return {
