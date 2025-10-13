@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import AOSInit from "@/components/AOSInit";
 
 export const metadata: Metadata = {
   title: "Cloud Seven Realty - Premium Projects & Properties",
@@ -41,11 +40,7 @@ export default function RootLayout({
           </>
         )}
       </head>
-      <body className="antialiased">
-  <AOSInit />
-  {children}
-</body>
-      <body className="font-sans">
+      <body className="font-sans antialiased">
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />
