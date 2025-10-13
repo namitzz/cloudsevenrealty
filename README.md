@@ -120,14 +120,46 @@ Visit [http://localhost:3000](http://localhost:3000) to see your application.
 3. Add environment variables
 4. Deploy
 
+### GitHub Pages (Static Export)
+
+This repository is configured for automatic deployment to GitHub Pages. The site will be automatically deployed when you push to the `main` branch.
+
+**Setup Instructions:**
+
+1. Go to your repository settings on GitHub
+2. Navigate to **Settings > Pages**
+3. Under **Build and deployment**, select **GitHub Actions** as the source
+4. Push your changes to the `main` branch
+
+The GitHub Actions workflow (`.github/workflows/nextjs.yml`) will automatically:
+- Build the static site
+- Export all pages to the `./out` directory
+- Deploy to GitHub Pages
+
+Your site will be available at: `https://namitzz.github.io/cloudsevenrealty/`
+
+**Note:** The site is configured for static export with the following limitations:
+- API routes (`/api/lead`) won't work - forms will fail silently
+- Server-side features are disabled
+- Images are served unoptimized for static hosting
+
+For full functionality with API routes and server-side features, use Vercel deployment instead.
+
 ### Other Platforms
+
+The project is configured for static export, making it compatible with any static hosting platform:
 
 ```bash
 # Build the application
 npm run build
 
-# The output is in the .next directory
-# Configure your platform to serve this directory
+# The static output is in the ./out directory
+# Upload this directory to any static hosting service:
+# - Netlify
+# - Cloudflare Pages
+# - AWS S3 + CloudFront
+# - Azure Static Web Apps
+# - Any static file server
 ```
 
 ## 🎨 Customization
