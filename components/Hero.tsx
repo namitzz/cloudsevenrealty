@@ -6,12 +6,20 @@ import { fadeUp, fadeIn } from "@/lib/motion";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[600px] sm:min-h-[700px] flex items-center justify-center bg-gradient-to-br from-neutral-900 to-neutral-800 text-white">
-      {/* Background overlay */}
-      <div className="absolute inset-0 bg-black/50 z-10" />
+    <section className="relative min-h-[600px] sm:min-h-[700px] flex items-center justify-center bg-neutral-900 text-white overflow-hidden">
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src="/Cloud 7.mp4" type="video/mp4" />
+      </video>
       
-      {/* Background gradient - using solid gradient instead of external image */}
-      <div className="absolute inset-0 bg-gradient-to-br from-neutral-800 via-neutral-900 to-black opacity-90" />
+      {/* Background overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/60 z-10" />
 
       {/* Content */}
       <div className="relative z-20 container-custom text-center px-4">
