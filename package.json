@@ -26,6 +26,7 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
+    "@types/aos": "^3.0.7",
     "@typescript-eslint/eslint-plugin": "^8.45.0",
     "@typescript-eslint/parser": "^8.45.0",
     "autoprefixer": "^10.4.21",

@@ -1,188 +1,105 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement | null>(null);
 
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/projects", label: "Projects" },
     { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
     { href: "/events", label: "Events" },
     { href: "/blog", label: "Blog" },
+    { href: "/contact", label: "Contact" },
   ];
 
-  // Lock body scroll when menu is open
+  // close when clicking outside
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [isOpen]);
-
-  // Close menu on Escape key
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
-        setIsOpen(false);
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
       }
-    };
-    window.addEventListener("keydown", handleEscape);
-    return () => window.removeEventListener("keydown", handleEscape);
-  }, [isOpen]);
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  // close on ESC
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-luxury-gold/10">
-      <div className="container-custom">
-        <div className="flex items-center justify-between h-20 sm:h-24">
-          {/* Left: Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="p-2.5 rounded-lg text-luxury-navy hover:text-luxury-gold hover:bg-luxury-gold/10 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-luxury-gold"
-            aria-label="Toggle menu"
-            aria-expanded={isOpen}
-            aria-controls="slide-out-menu"
-          >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-            <span className="ml-2 text-sm font-semibold hidden sm:inline">Menu</span>
-          </button>
+    <div
+      ref={ref}
+      className="fixed top-4 right-4 sm:top-6 sm:right-6 z-50"
+    >
+      {/* Trigger Button */}
+      <button
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls="dropdown-menu"
+        className="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-brandNavy font-semibold shadow-md transition hover:shadow-luxury focus:outline-none focus:ring-2 focus:ring-luxury-gold"
+      >
+        <svg
+          className="h-5 w-5"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          fill="none"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        Menu
+      </button>
 
-          {/* Center: Enhanced Logo */}
-          <Link href="/" className="absolute left-1/2 transform -translate-x-1/2 group" aria-label="Home">
-            <div className="relative">
-              <Image 
-                src="/logo.svg" 
-                alt="Cloud Seven Realty" 
-                width={160} 
-                height={54} 
-                priority 
-                className="transition-transform duration-300 group-hover:scale-105"
-              />
-            </div>
-          </Link>
-
-          {/* Right: Contact CTA */}
-          <Link 
-            href="/contact" 
-            className="btn btn-primary text-sm font-semibold shadow-md hover:shadow-luxury transition-all duration-300"
-          >
-            Contact Us
-          </Link>
-        </div>
-      </div>
-
-      {/* Slide-out Menu */}
+      {/* Backdrop */}
       <AnimatePresence>
-        {isOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-luxury-navy/60 backdrop-blur-md z-[60]"
-              onClick={() => setIsOpen(false)}
-              aria-hidden="true"
-            />
-
-            {/* Slide-out Panel */}
-            <motion.div
-              id="slide-out-menu"
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ type: "spring", damping: 28, stiffness: 220 }}
-              className="fixed left-0 top-0 h-full w-full sm:w-[420px] bg-gradient-to-br from-white to-luxury-50 z-[70] shadow-2xl overflow-y-auto"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Navigation menu"
-            >
-              <div className="p-8">
-                {/* Logo in menu */}
-                <div className="mb-8 flex items-center justify-between">
-                  <Image 
-                    src="/logo.svg" 
-                    alt="Cloud Seven Realty" 
-                    width={140} 
-                    height={47} 
-                  />
-                  {/* Close button */}
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="p-2.5 rounded-lg text-luxury-navy hover:text-luxury-gold hover:bg-luxury-gold/10 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-luxury-gold"
-                    aria-label="Close menu"
-                  >
-                    <svg
-                      className="h-6 w-6"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-
-                {/* Navigation Links */}
-                <nav className="space-y-1">
-                  {navLinks.map((link, index) => (
-                    <motion.div
-                      key={link.href}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                    >
-                      <Link
-                        href={link.href}
-                        className="block px-5 py-4 text-xl font-semibold text-luxury-navy hover:text-luxury-gold hover:bg-luxury-gold/5 rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-luxury-gold border border-transparent hover:border-luxury-gold/20"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        {link.label}
-                      </Link>
-                    </motion.div>
-                  ))}
-                </nav>
-
-                {/* Additional Info */}
-                <div className="mt-12 p-6 bg-gradient-to-br from-luxury-gold/10 to-luxury-gold/5 rounded-xl border border-luxury-gold/20">
-                  <p className="text-sm font-medium text-luxury-navy mb-2">Need assistance?</p>
-                  <p className="text-xs text-neutral-600 mb-4">Our team is ready to help you find your dream property</p>
-                  <Link
-                    href="/contact"
-                    className="block text-center py-3 bg-luxury-gold text-white rounded-lg font-semibold hover:bg-luxury-darkGold transition-colors duration-300"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Get in Touch
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-          </>
+        {open && (
+          <motion.div
+            key="backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm"
+            onClick={() => setOpen(false)}
+          />
         )}
       </AnimatePresence>
-    </nav>
+
+      {/* Dropdown Panel */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="dropdown-menu"
+            initial={{ opacity: 0, y: -8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            className="absolute right-0 mt-3 w-60 rounded-2xl border border-luxury-gold/20 bg-white/95 shadow-2xl backdrop-blur-sm overflow-hidden"
+          >
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="block px-5 py-3 text-[15px] font-semibold text-brandNavy hover:bg-luxury-gold/10 transition"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
