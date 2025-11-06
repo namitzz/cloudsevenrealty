@@ -1,17 +1,6 @@
 import { google } from 'googleapis';
-
-// Types for property data from Google Sheets
-export interface PropertyData {
-  slug: string;
-  title: string;
-  subtitle: string;
-  price: string;
-  size: string;
-  location: string;
-  status: 'Buy' | 'Rent' | 'Land';
-  imageUrl: string;
-  features: string[];
-}
+import { PropertyData } from './types';
+import { generateSlug } from './utils';
 
 /**
  * Fetch properties from Google Sheets
@@ -69,10 +58,7 @@ export async function fetchPropertiesFromSheet(): Promise<PropertyData[]> {
       .filter(row => row.length >= 6 && row[0]) // At least 6 columns and title exists
       .map((row, index) => {
         const title = row[0] || '';
-        const slug = title
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/^-|-$/g, '');
+        const slug = generateSlug(title) || `property-${index + 1}`;
         
         return {
           slug: slug || `property-${index + 1}`,

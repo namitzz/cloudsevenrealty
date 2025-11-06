@@ -1,17 +1,6 @@
 import { google } from 'googleapis';
-
-// Import the PropertyData interface from googleSheets
-export interface PropertyData {
-  slug: string;
-  title: string;
-  subtitle: string;
-  price: string;
-  size: string;
-  location: string;
-  status: 'Buy' | 'Rent' | 'Land';
-  imageUrl: string;
-  features: string[];
-}
+import { PropertyData } from './types';
+import { generateSlug } from './utils';
 
 interface MetaJson {
   title?: string;
@@ -263,14 +252,4 @@ async function findFirstImageInFolder(
     console.error('Error finding image in folder:', error);
     return null;
   }
-}
-
-/**
- * Generate a URL-friendly slug from a title
- */
-function generateSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
 }
