@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import Filters from "@/components/Filters";
 import PropertyCard from "@/components/PropertyCard";
 import TrustStrip from "@/components/TrustStrip";
-import { getProperties } from "@/lib/googleSheets";
+import { getPropertiesFromDrive } from "@/lib/googleDrive";
 
 export const metadata: Metadata = {
   title: "Properties - Cloud Seven Realty",
@@ -26,7 +26,7 @@ function FiltersFallback() {
 }
 
 export default async function PropertiesPage() {
-  const properties = await getProperties();
+  const properties = await getPropertiesFromDrive();
   
   return (
     <>
