@@ -272,3 +272,47 @@ For questions or support:
 ---
 
 Built with ❤️ using Next.js 14
+
+## Google Drive Integration
+
+Manage your property listings directly from a Google Drive folder for easy updates without touching code!
+
+### Setup
+
+1. **Create a Google Drive folder** for your properties
+2. **Set up a Google Cloud service account** with Drive API access
+3. **Share the folder** with the service account email
+4. **Add credentials** to `.env`:
+   ```env
+   GOOGLE_DRIVE_ROOT_FOLDER_ID=<your_folder_id>
+   GOOGLE_SERVICE_ACCOUNT_EMAIL=<your_service_account_email>
+   GOOGLE_PRIVATE_KEY=<your_private_key>
+   ```
+
+### Data Structure Options
+
+**Option 1: Single properties.json file**
+- Place a `properties.json` file in the root folder containing an array of property objects
+- Each property should follow the `PropertyData` interface
+
+**Option 2: Subfolder structure**
+- Create a subfolder for each property
+- Add a `meta.json` file in each subfolder with property details
+- Add property images to the folder (first image will be used as the main image)
+- Image IDs are automatically converted to viewable URLs
+
+### Example meta.json
+```json
+{
+  "title": "Luxury Villa in Downtown",
+  "subtitle": "Spacious 4BHK villa with garden",
+  "price": "2.5Cr",
+  "size": "3500 sqft",
+  "location": "Downtown",
+  "status": "Buy",
+  "features": ["4 BHK", "Garden", "Parking", "Modern amenities"]
+}
+```
+
+### Drive API Scopes
+The integration uses: `https://www.googleapis.com/auth/drive.readonly`
